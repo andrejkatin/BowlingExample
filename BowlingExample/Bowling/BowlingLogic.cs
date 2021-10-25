@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 
 namespace BowlingExampleTemplate.Bowling
 {
-    public static class BowlingLogic
+    public class BowlingLogic
     {
         private static int firstThrow = 0;
         private static int secondThrow = 0;
         private static int sum = 0;
-        private static int frames = 10;
+        private static int frames = 3;
         private static Random rng = new Random();
+
+        private static List<int> strikes = new List<int>();
+        private static List<int> spares = new List<int>();
+        private static List<int> scores = new List<int>();
 
         public static void bowlingGame()
         {
@@ -31,7 +35,7 @@ namespace BowlingExampleTemplate.Bowling
                     }
                     else if (firstThrow == 10)
                     {
-                        strike();
+                        strike(i);
                     }
                     else
                     {
@@ -45,12 +49,12 @@ namespace BowlingExampleTemplate.Bowling
                         }
                         else if (firstThrow == 0 && secondThrow == 10)
                         {
-                            strike();
+                            strike(i);
                         }
                         else if (firstThrow + secondThrow == 10)
                         {
                             sum += secondThrow;
-                            spare();
+                            spare(i);
                         }
                         else
                         {
@@ -73,30 +77,32 @@ namespace BowlingExampleTemplate.Bowling
             {
                 try
                 {
-                    firstThrow = rng.Next(1, 10);
+                    firstThrow = rng.Next(1, 11);
                     Console.WriteLine("Frame: " + (i + 1) + " ---> First throw = " + firstThrow);
                     if (firstThrow == 10)
                     {
-                        strike();
+                        strike(i);
                     }
                     else
                     {
-                        secondThrow = rng.Next(1, 10 - firstThrow);
+                        secondThrow = rng.Next(1, 11 - firstThrow);
                         Console.WriteLine("Frame: " + (i + 1) + " ---> Second throw = " + secondThrow);
                         if (firstThrow == 0 && secondThrow == 10)
                         {
-                            strike();
+                            strike(i);
                         }
                         else if (firstThrow + secondThrow == 10)
                         {
                             sum += secondThrow;
-                            spare();
+                            spare(i);
                         }
                         else
                         {
                             sum += secondThrow;
                         }
                         sum += firstThrow;
+                        scores.Add(firstThrow);
+                        scores.Add(secondThrow);
                     }
                 }
                 catch
@@ -104,17 +110,53 @@ namespace BowlingExampleTemplate.Bowling
                     Console.WriteLine("You must enter a numbered values");
                 }
             }
+
+            for(int i = 0; i < strikes.Count; i++)
+            {
+                int framesFirstThrow = strikes[i] * 2 + 2;
+                int framesSecondThrow = strikes[i] * 2 + 3;
+                if (strikes[i] == 2)
+                {
+                    int newThrow = rng.Next(1, 11);
+                    sum += newThrow;
+                    Console.WriteLine("Bonus throw: " + newThrow);
+                    break;
+                }
+                else if (framesFirstThrow == 10)
+                {
+                    framesSecondThrow++;
+                }
+                sum += scores[framesFirstThrow];
+                sum += scores[framesSecondThrow];
+
+            }
+            for (int i = 0; i < spares.Count; i++)
+            {
+                int framesFirstThrow = spares[i] * 2 + 2;
+                if (spares[i] == 2)
+                {
+                    int newThrow = rng.Next(1, 11);
+                    sum += newThrow;
+                    Console.WriteLine("Bonus throw: " + newThrow);
+                    break;
+                }
+                sum += scores[framesFirstThrow];
+
+            }
             Console.WriteLine("Your final score is: " + sum);
         }
 
-        private static void strike()
+        private static void strike(int i)
         {
-            sum += 20;
+            scores.Add(10);
+            scores.Add(0);
+            strikes.Add(i);
+            sum += 10;
         }
 
-        private static void spare()
+        private static void spare(int i)
         {
-            sum += 5;
+            spares.Add(i);
         }
     }
 }
