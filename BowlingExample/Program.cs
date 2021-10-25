@@ -3,7 +3,7 @@ using System;
 
 namespace BowlingExample
 {
-    public static class Program
+    class Program
     {
         static void Main(string[] args)
         {
