@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace BowlingExampleTemplate.Bowling
 {
-    public class BowlingLogic
+    public static class BowlingLogic
     {
         private static int firstThrow = 0;
         private static int secondThrow = 0;
         private static int sum = 0;
         private static int frames = 10;
         private static Random rng = new Random();
+
         public static void bowlingGame()
         {
             for (int i = 0; i < frames; i++)
