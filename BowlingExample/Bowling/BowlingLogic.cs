@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BowlingExampleTemplate.Bowling
 {
-    public class BowlingLogic
+    public static class BowlingLogic
     {
         private static int firstThrow = 0;
         private static int secondThrow = 0;
         private static int sum = 0;
-        private static int frames = 3;
+        private static int frames = 10;
         private static Random rng = new Random();
 
         private static List<int> strikes = new List<int>();
@@ -115,7 +115,7 @@ namespace BowlingExampleTemplate.Bowling
             {
                 int framesFirstThrow = strikes[i] * 2 + 2;
                 int framesSecondThrow = strikes[i] * 2 + 3;
-                if (strikes[i] == 2)
+                if (strikes[i] == 9)
                 {
                     int newThrow = rng.Next(1, 11);
                     sum += newThrow;
@@ -133,7 +133,7 @@ namespace BowlingExampleTemplate.Bowling
             for (int i = 0; i < spares.Count; i++)
             {
                 int framesFirstThrow = spares[i] * 2 + 2;
-                if (spares[i] == 2)
+                if (spares[i] == 9)
                 {
                     int newThrow = rng.Next(1, 11);
                     sum += newThrow;
