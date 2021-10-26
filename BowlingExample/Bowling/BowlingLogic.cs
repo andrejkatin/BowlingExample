@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BowlingExampleTemplate.Bowling
 {
-    public static class BowlingLogic
+    public class BowlingLogic
     {
         private static int firstThrow = 0;
         private static int secondThrow = 0;
